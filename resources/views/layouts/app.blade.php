@@ -28,7 +28,7 @@
                     <x-application-mark class="h-9 w-9" />
                     <div>
                         <p class="text-base font-semibold text-slate-900">{{ config('app.name', 'Laravel LiveChat') }}</p>
-                        <p class="text-xs uppercase tracking-wide text-slate-400">Realtime Studio</p>
+                        <p class="text-xs uppercase tracking-wide text-slate-400">Learn</p>
                     </div>
                 </div>
                 <nav class="px-4 py-6 space-y-2 text-sm">
