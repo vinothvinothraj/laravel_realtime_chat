@@ -3,7 +3,6 @@
         <div class="flex min-h-[85vh] items-stretch">
             <aside class="hidden lg:flex lg:w-1/5 flex-col border-r border-slate-200 bg-slate-50 self-stretch h-full">
                 <div class="px-5 pt-4 pb-3 border-b border-slate-200 bg-slate-50/80 backdrop-blur">
-                    <div class="text-xs uppercase tracking-[0.35em] text-slate-400">Conversations</div>
                     <div class="mt-3 grid grid-cols-2 rounded-2xl bg-slate-100 p-1 text-sm">
                         <button
                             wire:click="setConversationFilter('chats')"
@@ -124,9 +123,7 @@
 
             <section class="w-full lg:w-4/5 flex flex-col min-h-0">
                 <div class="bg-slate-50 border-b border-slate-200 px-6 py-4">
-                    <div class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">Active chat</div>
-                    <div class="mt-1 text-2xl font-bold text-slate-900">Realtime Conversations</div>
-                    <p class="text-xs text-slate-400">Select a chat or group from the left panel.</p>
+                    <div class="mt-1 text-2xl font-bold text-slate-900">Conversations</div>
                 </div>
 
                 <div
