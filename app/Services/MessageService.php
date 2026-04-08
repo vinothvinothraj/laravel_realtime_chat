@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Events\MessageSent;
 use App\Models\Message;
 use App\Models\Room;
 use App\Models\User;
@@ -15,7 +14,8 @@ class MessageService
 {
     public function __construct(
         protected MessageRepositoryInterface $messages,
-        protected RoomRepositoryInterface $rooms
+        protected RoomRepositoryInterface $rooms,
+        protected PusherService $pusher
     ) {
     }
 
@@ -41,7 +41,7 @@ class MessageService
             'content' => $message->content,
         ]);
 
-        broadcast(new MessageSent($message))->toOthers();
+        $this->pusher->triggerChatMessage($message);
 
         return $message;
     }

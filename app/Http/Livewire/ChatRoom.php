@@ -65,10 +65,10 @@ class ChatRoom extends Component
         $this->refreshRooms($roomId);
     }
 
-    public function incomingMessage(array $payload): void
+    public function incomingMessage(array $message): void
     {
-        if ((int) ($payload['message']['room_id'] ?? 0) === $this->activeRoomId) {
-            $this->messages[] = $payload['message'];
+        if ((int) ($message['room_id'] ?? 0) === $this->activeRoomId) {
+            $this->messages[] = $message;
         }
     }
 

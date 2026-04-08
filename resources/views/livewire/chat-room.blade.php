@@ -1,4 +1,4 @@
-<div class="w-full">
+<div id="chat-room-root" data-current-user-id="{{ auth()->id() }}" class="w-full">
     <div class="w-full rounded-3xl overflow-hidden shadow-2xl border border-slate-200 bg-white">
         <div class="flex min-h-[80vh]">
             <div class="w-1/3 hidden lg:flex flex-col border-r border-slate-200 bg-slate-50">
@@ -100,7 +100,7 @@
                     </div>
                 @empty
                     <div class="text-center text-sm text-slate-500">
-                        No messages yet—send a hello to start the thread.
+                        No messages yet - send a hello to start the thread.
                     </div>
                 @endforelse
             </div>
@@ -122,52 +122,80 @@
                     </div>
                 </div>
             </form>
+            <div id="active-room-trigger" data-room="{{ $activeRoomId }}" class="hidden"></div>
         </div>
     </div>
 
-    <div id="active-room-trigger" data-room="{{ $activeRoomId }}" class="hidden"></div>
-
     @push('scripts')
         <script>
-            document.addEventListener('livewire:load', () => {
+            document.addEventListener('DOMContentLoaded', () => {
                 const chatWindow = document.getElementById('chat-window');
+                const chatRoot = document.getElementById('chat-room-root');
                 const activeRoomTrigger = document.getElementById('active-room-trigger');
+                const currentUserId = parseInt(chatRoot?.dataset.currentUserId || 0, 10);
                 let activeChannel = null;
+                let activeChannelName = null;
 
                 const subscribeRoom = (roomId) => {
-                    if (!window.Echo || !roomId) {
+                    if (!window.pusher || !roomId) {
                         return;
                     }
 
-                    if (activeChannel) {
-                        activeChannel.stopListening();
+                    const nextChannelName = `chat-room.${roomId}`;
+
+                    if (activeChannelName === nextChannelName) {
+                        return;
                     }
 
-                    activeChannel = window.Echo.channel(`chat-room.${roomId}`);
-                    console.log('live chat channel subscribed', activeChannel.name);
+                    if (activeChannelName) {
+                        activeChannel?.unbind_all();
+                        window.pusher.unsubscribe(activeChannelName);
+                    }
 
-                    activeChannel.listen('MessageSent', (event) => {
-                        console.log('live chat incoming event', event);
-                        Livewire.emit('incomingMessage', event.message);
+                    activeChannelName = nextChannelName;
+                    activeChannel = window.pusher.subscribe(activeChannelName);
+                    console.log('live chat channel subscribed', activeChannelName);
+
+                    activeChannel.bind('send-message', (data) => {
+                        console.debug('live chat send event', data);
+                    });
+
+                    activeChannel.bind('received-message', (data) => {
+                        const message = data?.message;
+
+                        if (!message || message.user?.id === currentUserId) {
+                            return;
+                        }
+
+                        console.log('live chat incoming event', data);
+                        Livewire.dispatch('incomingMessage', { message });
                     });
                 };
 
                 const triggerId = () => parseInt(activeRoomTrigger?.dataset.room || 0, 10);
                 subscribeRoom(triggerId());
 
-                Livewire.hook('element.updated', (el) => {
-                    if (!activeRoomTrigger || el.id !== 'active-room-trigger') {
-                        return;
-                    }
+                if (activeRoomTrigger) {
+                    const roomObserver = new MutationObserver(() => {
+                        subscribeRoom(triggerId());
+                    });
 
-                    subscribeRoom(triggerId());
-                });
+                    roomObserver.observe(activeRoomTrigger, {
+                        attributes: true,
+                        attributeFilter: ['data-room'],
+                    });
+                }
 
-                Livewire.hook('message.processed', () => {
-                    if (chatWindow) {
+                if (chatWindow) {
+                    const scrollObserver = new MutationObserver(() => {
                         chatWindow.scrollTop = chatWindow.scrollHeight;
-                    }
-                });
+                    });
+
+                    scrollObserver.observe(chatWindow, {
+                        childList: true,
+                        subtree: true,
+                    });
+                }
             });
         </script>
     @endpush

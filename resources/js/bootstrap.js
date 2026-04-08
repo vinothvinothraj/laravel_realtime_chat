@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 
 window.axios = axios;
@@ -9,15 +8,10 @@ const echoKey = import.meta.env.VITE_PUSHER_APP_KEY;
 
 if (echoKey) {
     window.Pusher = Pusher;
-
-    Pusher.logToConsole = true;
-
-    window.Echo = new Echo({
-        broadcaster: 'pusher',
-        key: echoKey,
+    window.pusher = new Pusher(echoKey, {
         cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
         forceTLS: true,
-        encrypted: true,
-        enabledTransports: ['ws', 'wss'],
     });
+
+    Pusher.logToConsole = true;
 }

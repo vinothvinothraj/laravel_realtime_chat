@@ -14,9 +14,9 @@
 
         <div class="bg-white shadow rounded-2xl border border-gray-100 p-6 space-y-3">
             <p class="text-sm text-slate-600">
-                When you press the button below Laravel will broadcast a hard-coded payload to the
-                <code>test-pusher</code> channel. Every authenticated browser tab listening
-                to that channel should display the incoming payload instantly via Pusher.
+                When you press the button below PHP will trigger a hard-coded payload directly through
+                Pusher on the <code>test-pusher</code> channel. Every authenticated browser tab
+                listening to that channel should display the incoming payload instantly.
             </p>
 
             <form method="POST" action="{{ route('test-pusher.trigger') }}">
@@ -24,7 +24,7 @@
 
                 <div class="flex justify-center">
                     <x-button>
-                        Push “Hello world” to all listeners
+                        Push "Hello world" to all listeners
                     </x-button>
                 </div>
             </form>
@@ -39,7 +39,7 @@
             </div>
             <div id="test-pusher-feed" class="space-y-2">
                 <div class="text-slate-400 text-xs">
-                    Awaiting incoming payloads…
+                    Awaiting incoming payloads...
                 </div>
             </div>
         </div>
@@ -48,19 +48,20 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                if (!window.Echo) {
-                    console.warn('Echo is not ready yet for test-pusher');
+                if (!window.pusher) {
+                    console.warn('Pusher is not ready yet for test-pusher');
                     return;
                 }
 
-                window.Echo.channel('test-pusher')
-                    .listen('TestPusherEvent', (event) => {
-                        const feed = document.getElementById('test-pusher-feed');
-                        const row = document.createElement('div');
-                        row.className = 'rounded-xl bg-white px-4 py-3 shadow-sm text-slate-700 border border-slate-200';
-                        row.textContent = `${event.message ?? 'Hello'} (from ${event.sender?.name ?? 'System'})`;
-                        feed.prepend(row);
-                    });
+                const channel = window.pusher.subscribe('test-pusher');
+
+                channel.bind('my-event', (data) => {
+                    const feed = document.getElementById('test-pusher-feed');
+                    const row = document.createElement('div');
+                    row.className = 'rounded-xl bg-white px-4 py-3 shadow-sm text-slate-700 border border-slate-200';
+                    row.textContent = `${data.message ?? 'Hello'} (from ${data.sender?.name ?? 'System'})`;
+                    feed.prepend(row);
+                });
             });
         </script>
     @endpush

@@ -1,6 +1,6 @@
 <?php
 
-use App\Events\TestPusherEvent;
+use App\Services\PusherService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,10 +26,10 @@ Route::middleware([
     })->name('test-pusher');
 
     Route::post('/test-pusher/trigger', function (Request $request) {
-        broadcast(new TestPusherEvent([
+        app(PusherService::class)->trigger('test-pusher', 'my-event', [
             'message' => 'Hello world from the Laravel test route!',
             'sender' => auth()->user()?->only(['id', 'name']),
-        ]));
+        ]);
 
         return back()->with('status', 'Test payload dispatched.');
     })->name('test-pusher.trigger');
