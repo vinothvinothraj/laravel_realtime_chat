@@ -12,7 +12,7 @@ class RoomRepository implements RoomRepositoryInterface
     public function forUser(int $userId): Collection
     {
         return Room::whereHas('participants', fn ($query) => $query->where('user_id', $userId))
-            ->with(['participants'])
+            ->with(['participants', 'latestMessage.user'])
             ->get();
     }
 

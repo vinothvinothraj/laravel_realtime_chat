@@ -66,7 +66,7 @@
                         </div>
                     </header>
 
-                    <main class="flex-1 overflow-auto px-6 py-6">
+                    <main class="flex-1 overflow-auto px-4">
                         {{ $slot }}
                     </main>
                 </div>
