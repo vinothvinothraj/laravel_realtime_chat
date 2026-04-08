@@ -24,9 +24,9 @@
         x-data="{ showTaskModal: false, modalStatus: 'todo', modalTitle: 'Create task' }"
         x-init="if ({{ $errors->any() ? 'true' : 'false' }}) showTaskModal = true"
         x-on:task-modal-open.window="showTaskModal = true; modalStatus = $event.detail.status ?? 'todo'; modalTitle = $event.detail.title ?? 'Create task'"
-        class="space-y-6 py-6"
+        class="flex h-full min-h-0 flex-col gap-6 py-6"
     >
-        <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <section class="shrink-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
             <div class="flex flex-wrap items-end justify-between gap-4">
                 <div class="grid flex-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
                     <div class="space-y-2">
@@ -93,7 +93,7 @@
             </div>
         </section>
 
-        <section class="grid gap-4 xl:grid-cols-4">
+        <section class="grid flex-1 min-h-0 gap-4 xl:grid-cols-4">
             @foreach ($columns as $column)
                 @php
                     $accent = match ($column['value']) {
@@ -118,8 +118,8 @@
                     };
                 @endphp
 
-                <article class="rounded-[1.75rem] border border-slate-200 bg-white p-3 shadow-sm" data-task-column="{{ $column['value'] }}">
-                    <header class="flex items-center justify-between gap-3 rounded-[1.35rem] {{ $accent }} px-4 py-3">
+                <article class="flex min-h-0 flex-col rounded-[1.75rem] border border-slate-200 bg-white p-3 shadow-sm" data-task-column="{{ $column['value'] }}">
+                    <header class="shrink-0 flex items-center justify-between gap-3 rounded-[1.35rem] {{ $accent }} px-4 py-3">
                         <div class="flex items-center gap-3">
                             <i class="fa-solid {{ $columnIcon }} text-slate-500"></i>
                             <span class="h-2.5 w-2.5 rounded-full {{ $dot }}"></span>
@@ -133,7 +133,7 @@
                         </span>
                     </header>
 
-                    <div class="mt-3 min-h-[24rem] space-y-3 rounded-[1.35rem] border border-dashed border-slate-200 bg-slate-50 p-3" data-task-list data-task-status="{{ $column['value'] }}">
+                    <div class="mt-3 flex-1 min-h-0 space-y-3 overflow-y-auto rounded-[1.35rem] border border-dashed border-slate-200 bg-slate-50 p-3" data-task-list data-task-status="{{ $column['value'] }}">
                         <div
                             class="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-6 text-center text-sm text-slate-500"
                             data-task-empty
@@ -179,7 +179,7 @@
                         @endforeach
                     </div>
 
-                    <div class="mt-3">
+                    <div class="mt-3 shrink-0">
                         <button
                             type="button"
                             x-on:click="$dispatch('task-modal-open', { status: '{{ $column['value'] }}', title: 'New task in {{ $column['label'] }}' })"

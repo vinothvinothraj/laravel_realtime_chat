@@ -18,12 +18,12 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased overflow-hidden">
         <x-banner />
 
-        <div class="min-h-screen bg-slate-100">
-            <div class="flex min-h-screen">
-            <aside class="w-72 border-r border-slate-200 bg-white flex flex-col">
+        <div class="h-screen bg-slate-100 overflow-hidden">
+            <div class="flex h-full">
+            <aside class="w-72 shrink-0 border-r border-slate-200 bg-white flex flex-col h-full">
                 <div class="px-6 py-5 border-b border-slate-200 flex items-center gap-3">
                     <x-application-mark class="h-9 w-9" />
                     <div>
@@ -58,8 +58,8 @@
                 </div>
             </aside>
 
-                <div class="flex-1 flex flex-col">
-                    <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+                <div class="flex-1 min-w-0 flex flex-col h-full">
+                    <header class="shrink-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
                         <div class="text-lg font-semibold text-slate-900">{{ $header ?? 'Workspace' }}</div>
                         <div class="flex items-center gap-3">
                             <div class="text-sm text-slate-500">{{ Auth::user()->name }}</div>
@@ -73,7 +73,7 @@
                         </div>
                     </header>
 
-                    <main class="flex-1 overflow-auto px-4">
+                    <main class="flex-1 min-h-0 overflow-hidden px-4">
                         {{ $slot }}
                     </main>
                 </div>
