@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passenger Details</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script defer src="assets/app.js"></script>
+</head>
+<body data-page="passenger-details">
+    <main class="screen stack">
+        <div>
+            <div class="pill">Passenger</div>
+            <h1 class="title">Enter details</h1>
+        </div>
+        <form class="stack" data-passenger-form>
+            <div class="card stack">
+                <input class="input" name="contact_name" placeholder="Contact name" required>
+                <input class="input" name="contact_phone" placeholder="Contact phone" required>
+                <input class="input" name="contact_email" type="email" placeholder="Contact email">
+            </div>
+            <div class="stack" data-passengers></div>
+            <button class="button" type="submit">Continue to payment</button>
+        </form>
+        <div class="muted small" data-error></div>
+    </main>
+</body>
+</html>

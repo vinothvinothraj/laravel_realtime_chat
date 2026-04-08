@@ -32,6 +32,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_bus_staff',
     ];
 
     /**
@@ -65,11 +66,22 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_bus_staff' => 'boolean',
         ];
     }
 
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function isBusStaff(): bool
+    {
+        return (bool) $this->is_bus_staff || strtolower((string) $this->name) === 'admin';
+    }
+
+    public function canAccessBusBooking(): bool
+    {
+        return $this->isBusStaff();
     }
 }

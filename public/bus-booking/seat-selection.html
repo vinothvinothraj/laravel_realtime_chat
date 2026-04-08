@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Seats</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script defer src="assets/app.js"></script>
+</head>
+<body data-page="seat-selection">
+    <main class="screen stack">
+        <div class="row between center">
+            <div>
+                <div class="pill">Seat map</div>
+                <h1 class="title">Pick your seats</h1>
+            </div>
+            <a class="button secondary" style="width:auto;padding:12px 14px;" href="trips.html">Back</a>
+        </div>
+        <div class="card stack">
+            <div class="seat-grid" data-seat-map></div>
+            <button class="button" data-seat-next type="button">Continue</button>
+        </div>
+        <div class="muted small" data-error></div>
+    </main>
+</body>
+</html>

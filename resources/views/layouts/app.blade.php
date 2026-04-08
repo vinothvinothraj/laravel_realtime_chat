@@ -11,6 +11,7 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <style>[x-cloak]{display:none !important;}</style>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -53,6 +54,48 @@
                         <i class="fa-solid fa-list-check w-4 text-center text-slate-400"></i>
                         Task Management
                     </a>
+                    @if (Auth::check())
+                        @php($busBookingOpen = request()->routeIs('bus-booking.*'))
+                        <div class="pt-2" x-data="{ open: {{ $busBookingOpen ? 'true' : 'false' }} }">
+                            <button
+                                type="button"
+                                @click="open = !open"
+                                class="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 font-medium transition hover:bg-slate-100 {{ $busBookingOpen ? 'bg-slate-100 text-slate-900' : 'text-slate-600' }}"
+                            >
+                                <span class="flex items-center gap-3">
+                                    <i class="fa-solid fa-bus w-4 text-center text-slate-400"></i>
+                                    Bus Booking Admin
+                                </span>
+                                <i class="fa-solid fa-chevron-down text-[11px] text-slate-400 transition duration-200" :class="open ? 'rotate-180' : ''"></i>
+                            </button>
+                            <div x-show="open" x-cloak class="mt-2 ml-2 space-y-1 border-l border-slate-200 pl-3 text-sm">
+                                <a href="{{ route('bus-booking.dashboard') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition hover:bg-slate-100 {{ request()->routeIs('bus-booking.dashboard') ? 'bg-slate-100 text-slate-900' : '' }}">
+                                    <i class="fa-solid fa-gauge-high w-4 text-center text-slate-400"></i>
+                                    Dashboard
+                                </a>
+                                <a href="{{ route('bus-booking.operators.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition hover:bg-slate-100 {{ request()->routeIs('bus-booking.operators.*') ? 'bg-slate-100 text-slate-900' : '' }}">
+                                    <i class="fa-solid fa-building w-4 text-center text-slate-400"></i>
+                                    Operators
+                                </a>
+                                <a href="{{ route('bus-booking.routes.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition hover:bg-slate-100 {{ request()->routeIs('bus-booking.routes.*') ? 'bg-slate-100 text-slate-900' : '' }}">
+                                    <i class="fa-solid fa-route w-4 text-center text-slate-400"></i>
+                                    Routes
+                                </a>
+                                <a href="{{ route('bus-booking.buses.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition hover:bg-slate-100 {{ request()->routeIs('bus-booking.buses.*') ? 'bg-slate-100 text-slate-900' : '' }}">
+                                    <i class="fa-solid fa-bus-simple w-4 text-center text-slate-400"></i>
+                                    Buses
+                                </a>
+                                <a href="{{ route('bus-booking.trips.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition hover:bg-slate-100 {{ request()->routeIs('bus-booking.trips.*') ? 'bg-slate-100 text-slate-900' : '' }}">
+                                    <i class="fa-solid fa-calendar-days w-4 text-center text-slate-400"></i>
+                                    Trips
+                                </a>
+                                <a href="{{ route('bus-booking.bookings.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 transition hover:bg-slate-100 {{ request()->routeIs('bus-booking.bookings.*') ? 'bg-slate-100 text-slate-900' : '' }}">
+                                    <i class="fa-solid fa-ticket-simple w-4 text-center text-slate-400"></i>
+                                    Bookings
+                                </a>
+                            </div>
+                        </div>
+                    @endif
                 </nav>
                 <div class="mt-auto px-6 py-6 border-t border-slate-200">
                     <div class="text-xs uppercase tracking-wide text-slate-400">Signed in as</div>
