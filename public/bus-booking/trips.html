@@ -9,15 +9,35 @@
 </head>
 <body data-page="trips">
     <main class="screen stack">
-        <div class="row between center">
-            <div>
+        <header class="mobile-header">
+            <div class="brand-block">
+                <div class="brand-mark">BUS</div>
+                <div class="brand-text">
+                    <div class="brand-name">Bus Booking</div>
+                    <div class="brand-subtitle">Available trips</div>
+                </div>
+            </div>
+            <span class="pill">Step 2/5</span>
+        </header>
+
+        <section class="mobile-content content-pad">
+            <div class="page-header">
                 <div class="pill">Available trips</div>
                 <h1 class="title">Choose a departure</h1>
             </div>
-            <a class="button secondary" style="width:auto;padding:12px 14px;" href="index.html">Back</a>
-        </div>
-        <section class="list" data-trips></section>
-        <div class="muted small" data-error></div>
+            <section class="list" data-trips></section>
+            <div class="muted small" data-error></div>
+        </section>
+
+        <footer class="mobile-footer">
+            <div class="footer-copy">
+                <div class="footer-title">Trips list</div>
+                <div class="footer-subtitle">Pick the departure that fits</div>
+            </div>
+            <div class="footer-actions">
+                <a class="button secondary" href="index.html">Back</a>
+            </div>
+        </footer>
     </main>
 </body>
 </html>

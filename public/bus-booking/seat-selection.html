@@ -9,18 +9,38 @@
 </head>
 <body data-page="seat-selection">
     <main class="screen stack">
-        <div class="row between center">
-            <div>
+        <header class="mobile-header">
+            <div class="brand-block">
+                <div class="brand-mark">BUS</div>
+                <div class="brand-text">
+                    <div class="brand-name">Bus Booking</div>
+                    <div class="brand-subtitle">Seat selection</div>
+                </div>
+            </div>
+            <span class="pill">Step 3/5</span>
+        </header>
+
+        <section class="mobile-content content-pad">
+            <div class="page-header">
                 <div class="pill">Seat map</div>
                 <h1 class="title">Pick your seats</h1>
             </div>
-            <a class="button secondary" style="width:auto;padding:12px 14px;" href="trips.html">Back</a>
-        </div>
-        <div class="card stack">
-            <div class="seat-grid" data-seat-map></div>
-            <button class="button" data-seat-next type="button">Continue</button>
-        </div>
-        <div class="muted small" data-error></div>
+            <div class="card stack compact-card">
+                <div class="seat-grid" data-seat-map></div>
+            </div>
+            <div class="muted small" data-error></div>
+        </section>
+
+        <footer class="mobile-footer">
+            <div class="footer-copy">
+                <div class="footer-title">Choose seats</div>
+                <div class="footer-subtitle">Tap available seats to continue</div>
+            </div>
+            <div class="footer-actions">
+                <a class="button secondary" href="trips.html">Back</a>
+                <button class="button" data-seat-next type="button">Next</button>
+            </div>
+        </footer>
     </main>
 </body>
 </html>

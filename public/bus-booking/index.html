@@ -9,20 +9,52 @@
 </head>
 <body data-page="search">
     <main class="screen stack">
-        <div>
-            <div class="pill">Mobile booking</div>
-            <h1 class="title">Search your bus trip</h1>
-            <p class="muted">Find a trip and continue through seat selection and checkout.</p>
-        </div>
-        <div class="card stack">
-            <form data-search-form class="stack">
-                <input class="input" name="origin" placeholder="From">
-                <input class="input" name="destination" placeholder="To">
-                <input class="input" name="travel_date" type="date">
-                <button class="button" type="submit">Search buses</button>
-            </form>
-        </div>
-        <div class="muted small" data-error></div>
+        <header class="mobile-header">
+            <div class="brand-block">
+                <div class="brand-mark">BUS</div>
+                <div class="brand-text">
+                    <div class="brand-name">Bus Booking</div>
+                    <div class="brand-subtitle">Mobile checkout</div>
+                </div>
+            </div>
+            <span class="pill">Step 1/5</span>
+        </header>
+
+        <section class="mobile-content content-pad">
+            <div class="page-header">
+                <div class="pill">Mobile booking</div>
+                <h1 class="title">Search your bus trip</h1>
+                <p class="page-lead">Find a trip and continue through seat selection and checkout.</p>
+            </div>
+            <div class="card stack compact-card">
+                <form data-search-form class="form-panel">
+                    <label class="field-label">
+                        From
+                        <input class="input" name="origin" placeholder="Colombo">
+                    </label>
+                    <label class="field-label">
+                        To
+                        <input class="input" name="destination" placeholder="Kandy">
+                    </label>
+                    <label class="field-label">
+                        Travel date
+                        <input class="input" name="travel_date" type="date">
+                    </label>
+                    <button class="button" type="submit">Search buses</button>
+                </form>
+            </div>
+            <div class="muted small" data-error></div>
+        </section>
+
+        <footer class="mobile-footer">
+            <div class="footer-copy">
+                <div class="footer-title">Start a booking</div>
+                <div class="footer-subtitle">Search the next available trip</div>
+            </div>
+            <div class="footer-actions">
+                <a class="button secondary" href="#">Help</a>
+            </div>
+        </footer>
     </main>
 </body>
 </html>

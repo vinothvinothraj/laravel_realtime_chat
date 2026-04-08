@@ -34,7 +34,7 @@ function renderTrips(trips) {
     root.innerHTML = trips.map((trip) => `
         <article class="trip">
             <div class="row between center">
-                <strong>${trip.route?.origin || ''} → ${trip.route?.destination || ''}</strong>
+                <strong>${trip.route?.origin || ''} &rarr; ${trip.route?.destination || ''}</strong>
                 <span class="pill">${money(trip.base_fare)}</span>
             </div>
             <div class="small muted" style="margin-top:8px;">${trip.departure_at || ''}</div>
@@ -180,7 +180,7 @@ async function initPaymentPage() {
     const tripInfo = document.querySelector('[data-payment-summary]');
     if (tripInfo && state.trip) {
         tripInfo.innerHTML = `
-            <div class="small muted">${state.trip.route?.origin || ''} → ${state.trip.route?.destination || ''}</div>
+            <div class="small muted">${state.trip.route?.origin || ''} &rarr; ${state.trip.route?.destination || ''}</div>
             <div class="small muted">${state.seats.length} seat(s) selected</div>
         `;
     }
@@ -223,9 +223,9 @@ async function initSuccessPage() {
         <div class="card">
             <div class="title">Booking confirmed</div>
             <div class="muted">Reference</div>
-            <div style="font-size:28px;font-weight:700;margin:6px 0 12px;">${response.data.booking_reference}</div>
+            <div style="font-size:24px;font-weight:700;margin:6px 0 12px;word-break:break-word;">${response.data.booking_reference}</div>
             <div class="muted">Trip</div>
-            <div>${response.data.trip?.route?.origin || ''} → ${response.data.trip?.route?.destination || ''}</div>
+            <div>${response.data.trip?.route?.origin || ''} &rarr; ${response.data.trip?.route?.destination || ''}</div>
             <div style="margin-top:16px;">
                 <a class="button" href="ticket.html?reference=${encodeURIComponent(reference)}">View ticket</a>
             </div>
@@ -245,10 +245,10 @@ async function initTicketPage() {
         <div class="card">
             <div class="title">Digital ticket</div>
             <div class="muted">Reference</div>
-            <div style="font-size:28px;font-weight:700;margin:6px 0 12px;">${response.data.booking_reference}</div>
+            <div style="font-size:24px;font-weight:700;margin:6px 0 12px;word-break:break-word;">${response.data.booking_reference}</div>
             <div class="divider"></div>
             <div><strong>${response.data.contact_name}</strong></div>
-            <div class="muted">${response.data.trip?.route?.origin || ''} → ${response.data.trip?.route?.destination || ''}</div>
+            <div class="muted">${response.data.trip?.route?.origin || ''} &rarr; ${response.data.trip?.route?.destination || ''}</div>
             <div class="muted" style="margin-top:8px;">${response.data.trip?.departure_at || ''}</div>
         </div>
     `;

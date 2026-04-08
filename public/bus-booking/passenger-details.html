@@ -9,20 +9,49 @@
 </head>
 <body data-page="passenger-details">
     <main class="screen stack">
-        <div>
-            <div class="pill">Passenger</div>
-            <h1 class="title">Enter details</h1>
-        </div>
-        <form class="stack" data-passenger-form>
-            <div class="card stack">
-                <input class="input" name="contact_name" placeholder="Contact name" required>
-                <input class="input" name="contact_phone" placeholder="Contact phone" required>
-                <input class="input" name="contact_email" type="email" placeholder="Contact email">
+        <header class="mobile-header">
+            <div class="brand-block">
+                <div class="brand-mark">BUS</div>
+                <div class="brand-text">
+                    <div class="brand-name">Bus Booking</div>
+                    <div class="brand-subtitle">Passenger details</div>
+                </div>
             </div>
-            <div class="stack" data-passengers></div>
-            <button class="button" type="submit">Continue to payment</button>
-        </form>
-        <div class="muted small" data-error></div>
+            <span class="pill">Step 4/5</span>
+        </header>
+
+        <section class="mobile-content content-pad">
+            <div class="page-header">
+                <div class="pill">Passenger</div>
+                <h1 class="title">Enter details</h1>
+            </div>
+            <form id="passenger-form" class="stack" data-passenger-form>
+                <div class="card stack compact-card">
+                    <label class="field-label">Contact name
+                        <input class="input" name="contact_name" placeholder="Contact name" required>
+                    </label>
+                    <label class="field-label">Contact phone
+                        <input class="input" name="contact_phone" placeholder="Contact phone" required>
+                    </label>
+                    <label class="field-label">Contact email
+                        <input class="input" name="contact_email" type="email" placeholder="Contact email">
+                    </label>
+                </div>
+                <div class="stack" data-passengers></div>
+            </form>
+            <div class="muted small" data-error></div>
+        </section>
+
+        <footer class="mobile-footer">
+            <div class="footer-copy">
+                <div class="footer-title">Passenger info</div>
+                <div class="footer-subtitle">Fill contact and traveler details</div>
+            </div>
+            <div class="footer-actions">
+                <a class="button secondary" href="seat-selection.html">Back</a>
+                <button class="button" form="passenger-form" type="submit">Next</button>
+            </div>
+        </footer>
     </main>
 </body>
 </html>

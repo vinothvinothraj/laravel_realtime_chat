@@ -9,25 +9,56 @@
 </head>
 <body data-page="payment">
     <main class="screen stack">
-        <div>
-            <div class="pill">Checkout</div>
-            <h1 class="title">Select payment</h1>
-        </div>
-        <div class="card" data-payment-summary></div>
-        <form class="stack" data-payment-form>
-            <div class="card stack">
-                <input class="input" name="contact_name" placeholder="Contact name">
-                <input class="input" name="contact_phone" placeholder="Contact phone">
-                <input class="input" name="provider" placeholder="Provider" value="manual">
-                <select class="select" name="method">
-                    <option value="cash">Cash</option>
-                    <option value="card">Card</option>
-                    <option value="wallet">Wallet</option>
-                </select>
+        <header class="mobile-header">
+            <div class="brand-block">
+                <div class="brand-mark">BUS</div>
+                <div class="brand-text">
+                    <div class="brand-name">Bus Booking</div>
+                    <div class="brand-subtitle">Secure checkout</div>
+                </div>
             </div>
-            <button class="button" type="submit">Pay now</button>
-        </form>
-        <div class="muted small" data-error></div>
+            <span class="pill">Step 5/5</span>
+        </header>
+
+        <section class="mobile-content content-pad">
+            <div class="page-header">
+                <div class="pill">Checkout</div>
+                <h1 class="title">Select payment</h1>
+            </div>
+            <div class="card compact-card trip-summary" data-payment-summary></div>
+            <form id="payment-form" class="stack" data-payment-form>
+                <div class="card stack compact-card">
+                    <label class="field-label">Contact name
+                        <input class="input" name="contact_name" placeholder="Contact name">
+                    </label>
+                    <label class="field-label">Contact phone
+                        <input class="input" name="contact_phone" placeholder="Contact phone">
+                    </label>
+                    <label class="field-label">Provider
+                        <input class="input" name="provider" placeholder="Provider" value="manual">
+                    </label>
+                    <label class="field-label">Method
+                        <select class="select" name="method">
+                            <option value="cash">Cash</option>
+                            <option value="card">Card</option>
+                            <option value="wallet">Wallet</option>
+                        </select>
+                    </label>
+                </div>
+            </form>
+            <div class="muted small" data-error></div>
+        </section>
+
+        <footer class="mobile-footer">
+            <div class="footer-copy">
+                <div class="footer-title">Payment</div>
+                <div class="footer-subtitle">Complete the booking securely</div>
+            </div>
+            <div class="footer-actions">
+                <a class="button secondary" href="passenger-details.html">Back</a>
+                <button class="button" form="payment-form" type="submit">Pay now</button>
+            </div>
+        </footer>
     </main>
 </body>
 </html>
