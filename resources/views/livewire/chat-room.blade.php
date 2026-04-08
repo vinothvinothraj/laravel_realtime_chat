@@ -1,19 +1,21 @@
-<div id="chat-room-root" data-current-user-id="{{ auth()->id() }}" class="w-full">
-    <div class="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-200 bg-white">
-        <div class="flex min-h-[85vh] items-stretch">
-            <aside class="hidden lg:flex lg:w-1/5 flex-col border-r border-slate-200 bg-slate-50 self-stretch h-full">
+<div id="chat-room-root" data-current-user-id="{{ auth()->id() }}" class="h-full min-h-0 w-full">
+    <div class="flex h-full min-h-0 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl">
+        <div class="flex h-full min-h-0 w-full items-stretch">
+            <aside class="hidden h-full min-h-0 flex-col self-stretch overflow-hidden border-r border-slate-200 bg-slate-50 lg:flex lg:w-1/5">
                 <div class="px-5 pt-4 pb-3 border-b border-slate-200 bg-slate-50/80 backdrop-blur">
                     <div class="mt-3 grid grid-cols-2 rounded-2xl bg-slate-100 p-1 text-sm">
                         <button
                             wire:click="setConversationFilter('chats')"
-                            class="rounded-xl px-3 py-2 transition {{ $conversationFilter === 'chats' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500' }}"
+                            class="inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 transition {{ $conversationFilter === 'chats' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500' }}"
                         >
+                            <i class="fa-solid fa-comments text-xs"></i>
                             Chats <span class="ml-1 text-[10px] text-slate-400">({{ count($chatRooms) }})</span>
                         </button>
                         <button
                             wire:click="setConversationFilter('groups')"
-                            class="rounded-xl px-3 py-2 transition {{ $conversationFilter === 'groups' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500' }}"
+                            class="inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 transition {{ $conversationFilter === 'groups' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500' }}"
                         >
+                            <i class="fa-solid fa-users text-xs"></i>
                             Groups <span class="ml-1 text-[10px] text-slate-400">({{ count($groupRooms) }})</span>
                         </button>
                     </div>
@@ -28,7 +30,7 @@
                                     class="w-full text-left rounded-2xl px-3 py-3 border transition flex items-start gap-3 {{ $activeRoomId === $room['id'] ? 'border-emerald-500 bg-emerald-50 text-slate-900 shadow-sm shadow-emerald-100' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50' }}"
                                 >
                                     <span class="h-11 w-11 rounded-full bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-white flex items-center justify-center text-sm font-semibold shrink-0">
-                                        {{ $room['avatar'] }}
+                                        <i class="fa-solid fa-user-group text-xs"></i>
                                     </span>
                                     <span class="min-w-0 flex-1">
                                         <span class="flex items-start justify-between gap-2">
@@ -53,6 +55,9 @@
                                 </button>
                             @empty
                                 <div class="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-4 text-xs text-slate-500">
+                                    <div class="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                                        <i class="fa-regular fa-comment-dots"></i>
+                                    </div>
                                     No direct chats yet.
                                 </div>
                             @endforelse
@@ -63,7 +68,7 @@
                                     class="w-full text-left rounded-2xl px-3 py-3 border transition flex items-start gap-3 {{ $activeRoomId === $room['id'] ? 'border-emerald-500 bg-emerald-50 text-slate-900 shadow-sm shadow-emerald-100' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50' }}"
                                 >
                                     <span class="h-11 w-11 rounded-full bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 text-white flex items-center justify-center text-sm font-semibold shrink-0">
-                                        {{ $room['avatar'] }}
+                                        <i class="fa-solid fa-users text-xs"></i>
                                     </span>
                                     <span class="min-w-0 flex-1">
                                         <span class="flex items-start justify-between gap-2">
@@ -88,6 +93,9 @@
                                 </button>
                             @empty
                                 <div class="rounded-2xl border border-dashed border-slate-200 bg-white px-4 py-4 text-xs text-slate-500">
+                                    <div class="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                                        <i class="fa-regular fa-folder-open"></i>
+                                    </div>
                                     No group conversations yet.
                                 </div>
                             @endforelse
@@ -97,7 +105,10 @@
                     @if ($conversationFilter === 'groups')
                         @if ($participants->isNotEmpty())
                             <div class="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
-                                <div class="text-xs uppercase tracking-[0.35em] text-slate-400">Create group</div>
+                                <div class="flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    Create group
+                                </div>
                                 <input
                                     wire:model.defer="groupName"
                                     type="text"
@@ -112,7 +123,8 @@
                                         </label>
                                     @endforeach
                                 </div>
-                                <x-button wire:click="createGroup" class="mt-4 w-full text-xs py-2 bg-emerald-600 hover:bg-emerald-700">
+                                <x-button wire:click="createGroup" class="mt-4 inline-flex w-full items-center justify-center gap-2 text-xs py-2 bg-emerald-600 hover:bg-emerald-700">
+                                    <i class="fa-solid fa-plus text-[10px]"></i>
                                     Create group
                                 </x-button>
                             </div>
@@ -121,9 +133,12 @@
                 </div>
             </aside>
 
-            <section class="w-full lg:w-4/5 flex flex-col min-h-0">
-                <div class="bg-slate-50 border-b border-slate-200 px-6 py-4">
-                    <div class="mt-1 text-2xl font-bold text-slate-900">Conversations</div>
+            <section class="flex h-full min-h-0 w-full flex-col lg:w-4/5">
+                <div class="shrink-0 border-b border-slate-200 bg-slate-50 px-6 py-4">
+                    <div class="mt-1 flex items-center gap-3 text-2xl font-bold text-slate-900">
+                        <i class="fa-solid fa-comments text-slate-400"></i>
+                        Conversations
+                    </div>
                 </div>
 
                 <div
@@ -153,12 +168,15 @@
                         </div>
                     @empty
                         <div class="text-center text-sm text-slate-500">
+                            <div class="mb-2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                                <i class="fa-regular fa-message"></i>
+                            </div>
                             No messages yet - send a hello to start the thread.
                         </div>
                     @endforelse
                 </div>
 
-                <form wire:submit.prevent="sendMessage" class="px-5 pb-6 pt-4 bg-slate-50 border-t border-slate-200">
+                <form wire:submit.prevent="sendMessage" class="shrink-0 border-t border-slate-200 bg-slate-50 px-5 pb-6 pt-4">
                     <div class="flex gap-3 items-end">
                         <textarea
                             id="message"
@@ -169,7 +187,8 @@
                         ></textarea>
                         <div class="flex flex-col gap-2">
                             <x-input-error for="message" class="text-xs text-red-500" />
-                            <x-button class="bg-emerald-600 hover:bg-emerald-700 px-5 py-2 text-sm">
+                            <x-button class="inline-flex items-center gap-2 bg-emerald-600 px-5 py-2 text-sm hover:bg-emerald-700">
+                                <i class="fa-solid fa-paper-plane text-xs"></i>
                                 Send
                             </x-button>
                         </div>

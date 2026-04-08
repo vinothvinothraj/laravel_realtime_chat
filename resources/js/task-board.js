@@ -17,10 +17,32 @@ const initTaskBoard = () => {
     const modalHandle = board.querySelector('[data-task-modal-drag-handle]');
     let activeCard = null;
     let dragging = false;
+    let dragOrigin = null;
 
     const taskCards = () => Array.from(board.querySelectorAll('[data-task-card]'));
 
     const getMoveUrl = (taskId) => moveUrlTemplate.replace('__TASK__', String(taskId));
+
+    const taskAccentColor = (status) => {
+        switch (status) {
+            case 'todo':
+                return '#38bdf8';
+            case 'in_progress':
+                return '#f59e0b';
+            case 'testing':
+                return '#c084fc';
+            case 'completed':
+                return '#34d399';
+            default:
+                return '#cbd5e1';
+        }
+    };
+
+    const syncTaskCardStatus = (card) => {
+        const status = card.dataset.taskStatus || 'todo';
+
+        card.style.borderLeftColor = taskAccentColor(status);
+    };
 
     const visibleCards = (list) => Array.from(list.querySelectorAll('[data-task-card]:not([hidden])'));
 
@@ -125,6 +147,46 @@ const initTaskBoard = () => {
         if (!response.ok) {
             throw new Error('Task move failed');
         }
+    };
+
+    const restoreDraggedCard = (card) => {
+        if (!dragOrigin?.parent || !card) {
+            return;
+        }
+
+            if (dragOrigin.nextSibling) {
+                dragOrigin.parent.insertBefore(card, dragOrigin.nextSibling);
+            } else {
+                dragOrigin.parent.appendChild(card);
+            }
+
+        card.dataset.taskStatus = dragOrigin.status;
+        syncTaskCardStatus(card);
+    };
+
+    const animateSettledCard = (card) => {
+        if (!card?.animate) {
+            return;
+        }
+
+        card.animate(
+            [
+                {
+                    transform: 'translateY(6px) scale(0.985)',
+                    opacity: 0.92,
+                    boxShadow: '0 8px 24px rgba(15, 23, 42, 0.08)',
+                },
+                {
+                    transform: 'translateY(0) scale(1)',
+                    opacity: 1,
+                    boxShadow: '0 4px 14px rgba(15, 23, 42, 0.04)',
+                },
+            ],
+            {
+                duration: 220,
+                easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            }
+        );
     };
 
     const centerModal = () => {
@@ -251,12 +313,19 @@ const initTaskBoard = () => {
     }
 
     taskCards().forEach((card) => {
+        syncTaskCardStatus(card);
+
         card.addEventListener('dragstart', () => {
             if (card.hidden) {
                 return;
             }
 
             activeCard = card;
+            dragOrigin = {
+                parent: card.parentElement,
+                nextSibling: card.nextSibling,
+                status: card.dataset.taskStatus || 'todo',
+            };
             card.classList.add('is-dragging', 'opacity-70');
         });
 
@@ -264,6 +333,7 @@ const initTaskBoard = () => {
             card.classList.remove('is-dragging', 'opacity-70');
             refreshBoardState();
             activeCard = null;
+            dragOrigin = null;
         });
     });
 
@@ -291,18 +361,25 @@ const initTaskBoard = () => {
                 return;
             }
 
+            const nextStatus = list.dataset.taskStatus;
+            activeCard.dataset.taskStatus = nextStatus;
+            syncTaskCardStatus(activeCard);
+
             try {
                 await moveTask(activeCard, list);
+                animateSettledCard(activeCard);
                 refreshBoardState();
             } catch (error) {
                 console.error(error);
-                window.location.reload();
+                restoreDraggedCard(activeCard);
+                refreshBoardState();
             }
         });
     });
 
     makeModalDraggable();
     syncDateConstraints();
+    taskCards().forEach(syncTaskCardStatus);
     refreshBoardState();
     applyUserFilter();
 };

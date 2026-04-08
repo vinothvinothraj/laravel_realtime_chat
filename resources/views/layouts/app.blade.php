@@ -36,18 +36,21 @@
                         href="{{ route('dashboard') }}"
                         class="flex items-center gap-3 rounded-xl px-3 py-2 font-medium transition hover:bg-slate-100 {{ request()->routeIs('dashboard') ? 'bg-slate-100 text-slate-900' : 'text-slate-600' }}"
                     >
+                        <i class="fa-solid fa-table-columns w-4 text-center text-slate-400"></i>
                         Dashboard
                     </a>
                     <a
                         href="{{ route('chat') }}"
                         class="flex items-center gap-3 rounded-xl px-3 py-2 font-medium transition hover:bg-slate-100 {{ request()->routeIs('chat') ? 'bg-slate-100 text-slate-900' : 'text-slate-600' }}"
                     >
+                        <i class="fa-solid fa-comments w-4 text-center text-slate-400"></i>
                         Real-time Chat
                     </a>
                     <a
                         href="{{ route('tasks.index') }}"
                         class="flex items-center gap-3 rounded-xl px-3 py-2 font-medium transition hover:bg-slate-100 {{ request()->routeIs('tasks.*') ? 'bg-slate-100 text-slate-900' : 'text-slate-600' }}"
                     >
+                        <i class="fa-solid fa-list-check w-4 text-center text-slate-400"></i>
                         Task Management
                     </a>
                 </nav>

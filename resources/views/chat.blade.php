@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-6">
+    <div class="h-full min-h-0 py-6">
         <livewire:chat-room />
     </div>
 </x-app-layout>

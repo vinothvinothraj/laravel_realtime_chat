@@ -116,6 +116,13 @@
                         'testing' => 'fa-flask-vial',
                         'completed' => 'fa-circle-check',
                     };
+
+                    $columnAccent = match ($column['value']) {
+                        'todo' => '#38bdf8',
+                        'in_progress' => '#f59e0b',
+                        'testing' => '#c084fc',
+                        'completed' => '#34d399',
+                    };
                 @endphp
 
                 <article class="flex min-h-0 flex-col rounded-[1.75rem] border border-slate-200 bg-white p-3 shadow-sm" data-task-column="{{ $column['value'] }}">
@@ -144,10 +151,12 @@
 
                         @foreach ($column['tasks'] as $task)
                             <div
-                                class="overflow-hidden rounded-[1.35rem] border border-slate-200 border-l-4 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md {{ $column['value'] === 'todo' ? 'border-l-sky-400' : ($column['value'] === 'in_progress' ? 'border-l-amber-400' : ($column['value'] === 'testing' ? 'border-l-violet-400' : 'border-l-emerald-400')) }}"
+                                class="overflow-hidden rounded-[1.35rem] border border-slate-200 border-l-4 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                                style="border-left-color: {{ $columnAccent }};"
                                 draggable="true"
                                 data-task-card
                                 data-task-id="{{ $task->id }}"
+                                data-task-status="{{ $column['value'] }}"
                                 data-task-user-id="{{ $task->user_id }}"
                                 data-task-created-at="{{ $task->created_at?->toIso8601String() }}"
                             >
