@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TaskController;
 use App\Services\PusherService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,12 @@ Route::middleware([
     Route::get('/chat', function () {
         return view('chat');
     })->name('chat');
+
+    Route::controller(TaskController::class)->group(function () {
+        Route::get('/tasks', 'index')->name('tasks.index');
+        Route::post('/tasks', 'store')->name('tasks.store');
+        Route::patch('/tasks/{task}/move', 'move')->name('tasks.move');
+    });
 
     Route::get('/test-pusher', function () {
         return view('test-pusher');

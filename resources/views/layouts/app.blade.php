@@ -10,6 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -42,6 +43,12 @@
                         class="flex items-center gap-3 rounded-xl px-3 py-2 font-medium transition hover:bg-slate-100 {{ request()->routeIs('chat') ? 'bg-slate-100 text-slate-900' : 'text-slate-600' }}"
                     >
                         Real-time Chat
+                    </a>
+                    <a
+                        href="{{ route('tasks.index') }}"
+                        class="flex items-center gap-3 rounded-xl px-3 py-2 font-medium transition hover:bg-slate-100 {{ request()->routeIs('tasks.*') ? 'bg-slate-100 text-slate-900' : 'text-slate-600' }}"
+                    >
+                        Task Management
                     </a>
                 </nav>
                 <div class="mt-auto px-6 py-6 border-t border-slate-200">
